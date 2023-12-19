@@ -2,18 +2,26 @@
 
 require_once '../models/Publisher.php';
 
-if(isset($_GET['operacion'])){
-  $publishe = new Publisher();
+if (isset($_GET['operacion'])) {
+    $publisher = new Publisher();
 
-  if($_GET['operacion']== 'listar'){
-    $resultado = $publishe->listar();
-    echo json_encode($resultado);
+    if ($_GET['operacion'] == 'listarPublishers') {
+        $resultados = $publisher->listarPublishers();
+        echo json_encode($resultados);
+    } elseif ($_GET['operacion'] == 'superheroesPorPublisher') {
+        $idPublisher = isset($_GET['id']) ? $_GET['id'] : null;
 
-  }elseif($_GET['operacion'] == 'listarPublishes'){
-    $resultado = $publishe->listarPublishes(["id"=> $_GET['id']]);
-    json_encode($resultado);
-  }
-
-
-
+        if ($idPublisher) {
+            $resultados = $publisher->superheroesPorPublisher($idPublisher);
+            echo json_encode($resultados);
+        } else {
+            echo json_encode('error');
+        }
+    } 
+    
 }
+
+
+
+
+
